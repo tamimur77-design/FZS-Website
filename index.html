@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faridpur Zilla School</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .school-logo {
+            width: 76px;
+            height: 76px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .hero {
+            background-image:
+                linear-gradient(
+                    rgba(12, 40, 75, 0.45),
+                    rgba(12, 40, 75, 0.45)
+                ),
+                url("Screenshot 2026-10-13 214504.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .routine-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .routine-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .routine-table th,
+        .routine-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #bdMap {
+            height: 450px;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .payment-box,
+        .about-box,
+        .simple-box,
+        .contact-box {
+            padding: 25px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .gallery-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-box div {
+            padding: 35px 15px;
+            text-align: center;
+            background: #e8f1ed;
+            border-radius: 10px;
+        }
+
+        .notice {
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-left: 4px solid #16834a;
+        }
+
+        .payment-note {
+            font-size: 13px;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .school-logo {
+                width: 55px;
+                height: 55px;
+            }
+
+            .logo-area h1 {
+                font-size: 20px;
+            }
+
+            #bdMap {
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo-area">
+            <img src="Screenshot 2026-10-13 214455.png"
+                 alt="Faridpur Zilla School Logo"
+                 class="school-logo">
+
+            <div>
+                <h1>Faridpur Zilla School</h1>
+                <p>Established 1840</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#home">হোম</a></li>
+            <li><a href="#about">আমাদের সম্পর্কে</a></li>
+            <li><a href="#teachers">শিক্ষকবৃন্দ</a></li>
+            <li><a href="#nctb-books">বই</a></li>
+            <li><a href="#class-routine">রুটিন</a></li>
+            <li><a href="#result">ফলাফল</a></li>
+            <li><a href="#notice">নোটিশ</a></li>
+            <li><a href="#gallery">গ্যালারি</a></li>
+            <li><a href="#contact">যোগাযোগ</a></li>
+            <li><a href="#payment">Payment</a></li>
+        </ul>
+    </nav>
+
+    <!-- HOME -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>ফরিদপুর জিলা স্কুল</h2>
+            <p>
+                জ্ঞান, শৃঙ্খলা ও নৈতিকতার মাধ্যমে
+                আলোকিত ভবিষ্যৎ গড়ার প্রত্যয়
+            </p>
+            <button onclick="scrollToMap()">
+                বাংলাদেশের বিভাগ দেখুন
+            </button>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+        <h2 class="section-title">আমাদের সম্পর্কে</h2>
+        <div class="about-box">
+            <p>
+                ফরিদপুর জিলা স্কুল বাংলাদেশের একটি ঐতিহ্যবাহী
+                শিক্ষা প্রতিষ্ঠান। এখানে শিক্ষার্থীদের মানসম্মত
+                শিক্ষা, নৈতিকতা ও সৃজনশীলতার বিকাশে গুরুত্ব
+                দেওয়া হয়।
+            </p>
+        </div>
+    </section>
+
+    <!-- STUDENT SERVICES -->
+    <section class="section">
+        <h2 class="section-title">শিক্ষার্থীদের জন্য সেবা</h2>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>সকল শ্রেণির বই</h3>
+                <p>Class 6 থেকে Class 10 পর্যন্ত NCTB বই</p>
+                <a class="book-button" href="#nctb-books">বই দেখুন</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📅</div>
+                <h3>ক্লাস রুটিন</h3>
+                <p>সাপ্তাহিক ক্লাস রুটিন</p>
+                <a class="book-button" href="#class-routine">রুটিন দেখুন</a>
+            </div>
+
+            <div class="card" id="result">
+                <div class="card-icon">🏆</div>
+                <h3>ফলাফল</h3>
+                <p>পরীক্ষার ফলাফল দেখুন</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">💳</div>
+                <h3>School Payment</h3>
+                <p>স্কুলের পেমেন্ট পোর্টালে প্রবেশ করো</p>
+                <a class="book-button" href="#payment">Payment করুন</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NCTB BOOKS -->
+    <section class="section" id="nctb-books">
+        <h2 class="section-title">NCTB পাঠ্যবই লাইব্রেরি</h2>
+        <p class="map-description">ষষ্ঠ থেকে দশম শ্রেণির পাঠ্যবই</p>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">📘</div>
+                <h3>ষষ্ঠ শ্রেণি</h3>
+                <p>Class 6 Textbooks</p>
+                <a class="book-button" href="https://nctb.gov.bd/"
+                   target="_blank" rel="noopener noreferrer">বই দেখুন</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📗</div>
+                <h3>সপ্তম শ্রেণি</h3>
+                <p>Class 7 Textbooks</p>
+                <a class="book-button" href="https://nctb.gov.bd/"
+                   target="_blank" rel="noopener noreferrer">বই দেখুন</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📙</div>
+                <h3>অষ্টম শ্রেণি</h3>
+                <p>Class 8 Textbooks</p>
+                <a class="book-button" href="https://nctb.gov.bd/"
+                   target="_blank" rel="noopener noreferrer">বই দেখুন</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📕</div>
+                <h3>নবম শ্রেণি</h3>
+                <p>Class 9 Textbooks</p>
+                <a class="book-button" href="https://nctb.gov.bd/"
+                   target
